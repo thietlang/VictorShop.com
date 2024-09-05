@@ -60,12 +60,18 @@
             <img src="image/auth-image.png" alt="" class="img_login">
         </div>
         <div class="content_login">
+            <div id="customAlert" style="display:none; background-color:#94ba8b; color:#0e6603; padding:50px; margin-bottom:20px; border:1px solid #f5c6cb; border-radius:5px;
+                  display:flex;flex-direction: column;justify-content: center;align-items:center;font-size:2.2rem;text-align:center;
+                ">
+                  <strong>Sign up succsess!</strong> 
+                  <button onclick="closeAlert()" style="padding:0.8rem; color:white; margin-left:10rem; margin-top:5rem; border-radius: 0.2rem ; border:none;background:#414141 ; display:block;margin-top:1rem;cursor:pointer">Close</button>
+            </div>
             <h2 class="title_login">Create an Account</h2>
             <p class="instruct_login">Enter your details below</p>
-            <form action="#" class="form_login">
-                <input type="text" class="name" placeholder="Name">
-                <input type="text" class="email_phone" placeholder="Email or Phone Number">
-                <input type="password" class="password" placeholder="Password">
+            <form action="#" class="form_login" name="registrationForm"  onsubmit="return validateForm()">
+                <input type="text" class="name" name="name" placeholder="Name"  required>
+                <input type="text" class="email_phone" name="email"  placeholder="Email" required>
+              <input type="password" class="password" name="password" placeholder="Password" required>
                 <div class="bottom_content_login">
                     <button class="create_btn">Create Account</button>
                 </div>
@@ -150,5 +156,8 @@ const Mobie_Nav = document.querySelector(".mobie_nav");
 Hamberger.addEventListener("click", ()=> {
   Mobie_Nav.classList.toggle('mobie_nav_hide');
 });
+//sign-up binding input name
+
 </script>
+<script src="login.js"></script>
 </html>

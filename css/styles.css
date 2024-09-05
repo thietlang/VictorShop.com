@@ -897,6 +897,7 @@ ul{
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+   
 }
 @media only screen and (max-width:530px){
     .container_service{
