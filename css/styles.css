@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 :root{
     --font-main: "Inter", sans-serif;
-    --color-primary: #db4444;
+    --color-primary: #de6426;
     --color-dark-1:#000000;
     --color-dark-2:#7d8184;
     --color-white-1:#ffffff;
@@ -718,20 +718,30 @@ ul{
 .form_login input:focus{
     outline: none;
 }
-.email_phone{
+.form-control{
     width:100% ;
     height: 4rem;
     border: none;
     border-bottom: 2px solid var(--color-dark-2);
-    margin: 3rem 0rem;
+    margin: 1rem 0rem;
     font-size: 1.6rem;
 }
-.password{
-    width:100% ;
-    height: 4rem;
-    border: none;
-    border-bottom: 2px solid var(--color-dark-2);
-    font-size: 1.6rem;
+.form-control:hover {
+    border-color: #1dbfaf;
+}
+
+.form-group.invalid .form-control {
+    border-color: #f33a58;
+}
+
+.form-group.invalid .form-message {
+    color: #f33a58;
+}
+
+.form-message {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    padding: 4px 0 0;
 }
 .bottom_content_login{
     margin-top: 3rem;
@@ -779,6 +789,12 @@ ul{
     color: #000000;
 }
 .a_already_login:hover{
+    color: #db4444;
+}
+.a_signup_now{
+    color: #40cd3e;
+}
+.a_signup_now:hover{
     color: #db4444;
 }
 .create_btn{
