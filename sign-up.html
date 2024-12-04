@@ -60,6 +60,7 @@
             <img src="image/auth-image.png" alt="" class="img_login">
         </div>
         <div class="content_login">
+            <div id="toast"></div>
             <h2 class="title_login">Create an Account</h2>
             <p class="instruct_login">Enter your details below</p>
 
@@ -82,7 +83,7 @@
               </div>
    
                 <div class="bottom_content_login">
-                    <button class="create_btn">Sign Up</button>
+                    <button id="signUp_btn" class="create_btn" type="submit" >Sign Up</button>
                 </div>
                 <div class="already_login">
                     <p href="#" class="_already_login" >Already have account?</p>
@@ -141,21 +142,60 @@ document.addEventListener('DOMContentLoaded', function () {
         formGroupSelector: '.form-group',
         errorSelector: '.form-message',
         rules: [
-          Validator.isRequired('#fullname', 'Vui lòng nhập username của bạn'),
+          Validator.isRequired('#fullname', 'Vui lòng nhập Username của bạn'),
           Validator.isEmail('#email'),
-          Validator.minLength('#password', 6),
+          Validator.minLength('#password', 5),
           Validator.isRequired('#password_confirmation'),
           Validator.isConfirmed('#password_confirmation', function () {
             return document.querySelector('#form-1 #password').value;
           }, 'Mật khẩu nhập lại không chính xác')
         ],
         onSubmit: function (data) {
-          // Call API
-          console.log(data);
-        }
+        // Lưu thông tin vào LocalStorage
+        localStorage.setItem("username", data.fullname);
+        localStorage.setItem("password", data.password);
+
+        // Hiển thị thông báo thành công
+        toast({
+            title: "Success!",
+            message: `${data.fullname} signed up successfully!`,
+            type: "success",
+            duration: 3000
+        });
+
+        // Chuyển sang trang login.html sau khi sign-up thành công
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1000); // Chờ toast hoàn tất trước khi chuyển trang
+    }
+        
       });
       
     });
+    
+// const signupForm = document.getElementById("form-1");
+// const toastContainer = document.getElementById("toast");
+// const signUpBtn = document.getElementById("signUp_btn");
+
+// signupForm.addEventListener("submit", function (e) {
+//             e.preventDefault();
+
+//             const username = document.getElementById("fullname").value;
+//             const password = document.getElementById("password").value;
+
+//             if (username === "admin" && password === "admin") {
+//                 toast({
+//                     title: "Success!",
+//                     message: `${username} sign up sucsessfully !`,
+//                     type: "success",
+//                     duration: 3000
+//                 });
+                
+//             }
+//             //xóa dữ liệu sau khi sign up thành công
+//             // document.getElementById("fullname").value = "";
+//         });
+
 
     ScrollReveal().reveal('.nav_top', {
   origin:"bottom",

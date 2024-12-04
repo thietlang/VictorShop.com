@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <link rel="stylesheet" href="css/styles.css">
     <title>Login</title>
 </head>
@@ -58,7 +59,7 @@
             <img src="image/auth-image.png" alt="" class="img_login">
         </div>
         <div class="content_login">
-            
+            <div id="toast"></div>
             <h2 class="title_login">Log in to VICTOR</h2>
             <p class="instruct_login">Enter your details below</p>
 
@@ -72,7 +73,8 @@
                   <span class="form-message"></span>
                 </div>
                 <div class="bottom_content_login">
-                    <button class="login_btn">Log in</button>
+                    <button id="login-btn" class="login_btn" type="submit" >Log in</button>
+                    
                     <a href="#" class="forget_pw">Forget Password</a>
                 </div>
                 <div class="already_login">
@@ -80,7 +82,7 @@
                   <a href="sign-up.html" class="a_signup_now">Sign up now</a>
               </div>
             </form>
-
+            <button id="logout-btn" class="logout_btn" style="display: none;">Log out</button>
         </div>
     </div>
 </section>    
@@ -132,13 +134,92 @@
         errorSelector: '.form-message',
         rules: [
           Validator.isRequired('#fullname'),
-          Validator.minLength('#password', 6),
+          Validator.minLength('#password', 5),
         ],
         onSubmit: function (data) {
           // Call API
           console.log(data);
         }
       });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+    // Lấy thông tin từ LocalStorage
+    const username = localStorage.getItem("username");
+    const password = localStorage.getItem("password");
+
+    // Điền thông tin vào form đăng nhập
+    if (username && password) {
+        document.getElementById("fullname").value = username;
+        document.getElementById("password").value = password;
+
+        // Xóa thông tin khỏi LocalStorage để đảm bảo bảo mật
+        localStorage.removeItem("username");
+        localStorage.removeItem("password");
+    }
+});
+
+    const loginBtn = document.getElementById("login-btn");
+    const logoutBtn = document.getElementById("logout-btn");
+    const logInForm = document.getElementById("form-2");
+    const toastContainer = document.getElementById("toast");
+
+        logInForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById("fullname").value;
+            const password = document.getElementById("password").value;
+
+            if (username === "admin" && password === "admin") {
+                // Lưu thông tin vào LocalStorage
+                localStorage.setItem("loggedInUser", JSON.stringify({ username , password}));
+                
+                //hiển thị thông báo nếu thành công
+                toast({
+                    title: "Success!",
+                    message: `Chào mừng ${username} !`,
+                    type: "success",
+                    duration: 3000
+                });
+
+                loginBtn.style.display = "none";
+                logoutBtn.style.display = "block";
+
+                // Chuyển hướng đến trang chính (nếu cần)
+                // window.location.href = "index.html";
+            } else {
+                toast({
+                    title: "Error!",
+                    message: "Invalid username or password.",
+                    type: "error",
+                    duration: 3000
+                });
+            }
+        });
+        
+    // khi click vào log out
+    logoutBtn.addEventListener("click", function () {
+    // Xóa toàn bộ thông báo cũ
+    while (toastContainer.firstChild) {
+        toastContainer.removeChild(toastContainer.firstChild);
+    }
+
+    // Hiển thị thông báo logout thành công
+    toast({
+        title: "Success!",
+        message: "You have successfully logged out.",
+        type: "info",
+        duration: 3000
+    });
+
+    // Xóa thông tin khỏi LocalStorage
+    localStorage.removeItem("loggedInUser");
+    //reset form
+    document.getElementById("fullname").value = "";
+    document.getElementById("password").value = "";
+    // Hiển thị lại nút login và ẩn nút logout
+    loginBtn.style.display = "block";
+    logoutBtn.style.display = "none";
     });
 
 
